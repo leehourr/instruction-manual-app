@@ -1,7 +1,8 @@
 import React from "react";
+import YourManuals from "../components/Manual/YourManuals";
 
 const Upload = () => {
-  return <div>Upload</div>;
+  return <YourManuals />;
 };
 
 export default Upload;

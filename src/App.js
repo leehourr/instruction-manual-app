@@ -1,16 +1,21 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminDashbord from "./pages/AdminDashbord";
-import Home from "./pages/Home";
+import Home, { loader as getManuals } from "./pages/Home";
 import Layout from "./pages/Layout";
-import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Upload from "./pages/Upload";
+import AuthLogin from "./pages/AuthLogin";
+import AuthSignup from "./pages/AuthSignup";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Login />,
+    path: "/Login",
+    element: <AuthLogin />,
+  },
+  {
+    path: "/Signup",
+    element: <AuthSignup />,
   },
   {
     path: "/:name",
@@ -21,8 +26,9 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/manuals",
+        path: "/",
         element: <Home />,
+        loader: getManuals,
       },
       {
         path: "/upload-manual",
