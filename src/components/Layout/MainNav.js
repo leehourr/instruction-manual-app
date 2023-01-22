@@ -12,7 +12,7 @@ const MainNav = () => {
         src={reading}
         alt="cat_logo"
       />
-      <nav className=" self-center flex self-center">
+      <nav className=" self-center flex">
         <ul className="flex font-bold space-x-6">
           <li>
             <NavLink></NavLink>

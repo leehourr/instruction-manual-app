@@ -4,7 +4,6 @@ import { defer, useLoaderData, Await } from "react-router-dom";
 import { getManuals } from "../utils/api.js";
 
 import cat_what from "../assets/cat-what.gif";
-import Card from "../components/ui/Card";
 
 const Home = () => {
   const loadedData = useLoaderData();
@@ -32,7 +31,11 @@ const Home = () => {
       >
         <Await
           resolve={loadedData.Manuals}
-          errorElement={<p className="text-white ">Error loading contacts.</p>}
+          errorElement={
+            <p className="text-white font-bold text-s sm:text-lg text-center ">
+              Error loading manuals.
+            </p>
+          }
         >
           {(loadedData) => <ManualItems manuals={loadedData.manual} />}
         </Await>

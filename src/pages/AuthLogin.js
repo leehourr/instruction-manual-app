@@ -6,3 +6,5 @@ const AuthLogin = () => {
 };
 
 export default AuthLogin;
+
+export const action = async () => {};
