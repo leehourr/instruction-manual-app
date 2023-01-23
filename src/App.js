@@ -5,13 +5,14 @@ import Home, { loader as getManuals } from "./pages/Home";
 import Layout from "./pages/Layout";
 import Profile from "./pages/Profile";
 import Upload from "./pages/Upload";
-import AuthLogin from "./pages/AuthLogin";
+import AuthLogin, { action as login } from "./pages/AuthLogin";
 import AuthSignup from "./pages/AuthSignup";
 
 const router = createBrowserRouter([
   {
     path: "/Login",
     element: <AuthLogin />,
+    action: login,
   },
   {
     path: "/Signup",

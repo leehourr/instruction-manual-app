@@ -9,7 +9,7 @@ const Card = ({ created_at, uploaded_by, img, name, desc }) => {
   });
   //console.log(dateFormat.format(date));
   return (
-    <div className="my-3 sm:my-4 w-[20rem] hover:scale-105 transition-all duration-150 font-bold sm:w-[22rem]  h-full rounded-xl flex flex-col items-center justify-center text-left  2xl:mx-[4px] cursor-pointer bg-[#2a2e35]">
+    <div className="my-3 sm:my-4 w-[20rem] hover:scale-105 transition-all duration-150 font-bold sm:w-[22rem]  h-full rounded-xl flex flex-col items-center justify-center text-left mx-auto 2xl:mx-[4px] cursor-pointer bg-[#2a2e35]">
       <div className="w-full h-72">
         <img
           className="mx-auto w-full h-full self-start object-fit rounded-t-xl mb-2"

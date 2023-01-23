@@ -49,15 +49,13 @@ const MainNav = () => {
               placeholder="Search manual"
             />
           </li>
-          <li className="self-center">
-            <button className="">
-              <Link
-                to="/login"
-                className="ml-16 px-2 self-center sm:px-4 font-bold rounded-lg shadow-lg bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 hover:shadow-pink-500 active:shadow-pink-500 "
-              >
-                Login
-              </Link>
-            </button>
+          <li className="self-center ">
+            <Link
+              to="/login"
+              className="ml-16 px-2 self-center h-full sm:px-4 font-bold rounded-s shadow-lg bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 hover:shadow-pink-500 active:shadow-pink-500 "
+            >
+              Login
+            </Link>
           </li>
         </ul>
       </nav>

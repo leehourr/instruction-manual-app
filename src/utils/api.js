@@ -1,6 +1,8 @@
 import axios from "axios";
 import { LoadingStimulate } from "./LoadingStimulate";
 
+axios.defaults.withCredentials = true;
+
 const api = axios.create({
   baseURL: "http://127.0.0.1:8000/api",
 });
@@ -14,10 +16,14 @@ export const signUp = async () => {
 };
 
 //============= LOGIN REQUEST ====================
-export const signIn = async () => {
-  const response = await api.get("/auth/login").catch((e) => {
+export const signIn = async (credential) => {
+  await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
+  const response = await api.post("/auth/login", credential).catch((e) => {
     errorHandler(e);
   });
+
+  const user = api.post("/your-manuals", { user_id: 2 });
+  console.log(user);
   return response.data;
 };
 
@@ -74,6 +80,7 @@ export const getPendingManuals = async () => {
   return response.data;
 };
 
+//
 function errorHandler(error) {
   if (error.response) {
     console.log(error.response.data);
