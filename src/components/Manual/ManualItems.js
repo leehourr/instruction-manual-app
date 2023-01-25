@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Card from "../ui/Card";
+
+
 // import Manual from "./Manual";
 
 const ManualItems = ({ manuals }) => {
+
+
   return (
     <>
+
       <div className="w-[80%] flex gap-x-4 flex-wrap  text-white mx-auto">
         {manuals.map((i) => (
           <Card

@@ -5,25 +5,38 @@ import { signIn } from "../utils/api";
 import AuthLogin from "./AuthLogin";
 
 const AuthError = () => {
-  const navigte = useNavigate();
+  const navigate = useNavigate();
   const error = useRouteError();
+  const errMessage = error.data.message;
   // console.log(error.data.message);
   // console.log(error.status);
-  if (error.data.message) {
-    sessionStorage.removeItem("errorMessage");
-    sessionStorage.setItem("errorMessage", `${error.data.message}`);
+  try {
+    if (errMessage !== undefined) {
+      sessionStorage.removeItem("errorMessage");
+      sessionStorage.setItem("errorMessage", `${error.data.message}`);
+    }
+
+    if (errMessage === "login error" || errMessage === "signup error") {
+      sessionStorage.removeItem("errorMessage");
+      // console.log(error.data.errors.email[0]);
+      sessionStorage.setItem("errorMessage", `${error.data.errors.email[0]}`);
+    }
+  } catch (e) {
+    console.log(e);
   }
 
-  if (error.data.message === "validation error") {
-    sessionStorage.removeItem("errorMessage");
-    // console.log(error.data.errors.email[0]);
-    sessionStorage.setItem("errorMessage", `${error.data.errors.email[0]}`);
-  }
   // console.log("error");
 
   useEffect(() => {
-    if (error.status === 401) {
-      navigte("/Login/attemp", { replace: true });
+    if (
+      (error.status === 401 && errMessage === "login error") ||
+      (error.status === 401 && errMessage === "Incorrect credentials.")
+    ) {
+      navigate("/Login/attemp", { replace: true });
+    }
+
+    if (error.status === 401 && errMessage === "signup error") {
+      navigate("/signup", { replace: true });
     }
   }, []);
 };

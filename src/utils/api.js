@@ -51,9 +51,9 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-//============= LOGIN REQUEST ====================
+//============= SIGNUP REQUEST ====================
 export const signUp = async (credential) => {
-  const response = await api.post("/auth/logout", credential).catch((e) => {
+  const response = await api.post("/auth/signup", credential).catch((e) => {
     errorHandler(e);
   });
   return response.data;
@@ -129,7 +129,7 @@ export const getPendingManuals = async () => {
 //
 function errorHandler(error) {
   if (error.response) {
-    console.log("error1");
+    console.log("error from api call");
 
     console.log(error.response.data);
     console.log(error.response.status);

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useFetcher } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import reading from "../../assets/reading.gif";
@@ -15,6 +15,11 @@ const Signup = () => {
 
   const fetcher = useFetcher();
 
+  let error = sessionStorage?.getItem("errorMessage");
+
+  useEffect(() => {
+    return sessionStorage.removeItem("errorMessage");
+  }, []);
   const signUpHandler = (e) => {
     e.preventDefault();
     const name = inputName.current.value;
@@ -77,6 +82,11 @@ const Signup = () => {
       <h1 className="uppercase my-4 font-bold text-2xl sm:text-3xl">
         Instruction manuals
       </h1>
+      {error && (
+        <p className="bg-red-500 tracking-wide w-[80%] my-4 text-center rounded-sm font-semibold py-1  sm:w-[23rem]">
+          {error}
+        </p>
+      )}
       <form
         onSubmit={signUpHandler}
         className="w-full flex flex-col items-center justify-center"
