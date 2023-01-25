@@ -9,26 +9,26 @@ const Card = ({ created_at, uploaded_by, img, name, desc }) => {
   });
   //console.log(dateFormat.format(date));
   return (
-    <div className="my-3 sm:my-4 w-[20rem] hover:scale-105 transition-all duration-150 font-bold sm:w-[22rem]  h-full rounded-xl flex flex-col items-center justify-center text-left mx-auto 2xl:mx-[4px] cursor-pointer bg-[#2a2e35]">
+    <div className="my-3 sm:my-4 w-[20rem] hover:scale-110 transition-all duration-150 font-bold sm:w-[22rem]  h-full rounded-xl flex flex-col items-center justify-center text-left mx-auto 2xl:mx-[4px] cursor-pointer bg-zinc-800">
       <div className="w-full h-72">
         <img
-          className="mx-auto w-full h-full self-start object-fit rounded-t-xl mb-2"
+          className="mx-auto w-full h-full text-center  self-start object-fit rounded-t-xl mb-2"
           src={img}
-          alt="manual"
+          alt="no_image"
         />
       </div>
 
       <div className="w-full ml-12 my-3 sm:my-6">
-        <h1 className="font-mono font-bold  text-xl space-x-2 whitespace-pre-wrap  ">
+        <h1 className="font-Klavika font-bold  text-xl space-x-2 whitespace-pre-wrap  ">
           {name}
         </h1>
         <div className="flex gap-x-[0.3rem] items-center">
-          <img className="w-[1.1rem]" src={user} alt="" />{" "}
-          <h1 className="font-bold text-s text-pink-400">{uploaded_by}</h1>
+          <img className="w-[1.1rem]" src={user} alt="" />
+          <h1 className="font-bold text-s text-cyan-300">{uploaded_by}</h1>
         </div>
         <span className="text-zinc-200">{dateFormat.format(date)}</span>
       </div>
-      <button className="flex items-center justify-center gap-x-2 py-2 sm:py-4 w-full hover:bg-zinc-600 rounded-b-xl">
+      <button className="flex items-center justify-center gap-x-2 py-2 sm:py-4 w-full hover:bg-zinc-700 rounded-b-xl">
         <img className="w-[1.2rem]" src={download} alt="" />
         <span>Download</span>
       </button>

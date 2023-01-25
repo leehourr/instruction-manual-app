@@ -1,10 +1,23 @@
-import React from "react";
+import { useReducer } from "react";
 
-const AuthContext = React.createContext({
+import AuthContext from "./Auth-context";
+
+const defaultAuth = {
   message: "",
+  name: "",
+  email: "",
+  role: "",
+  user_uploads: [],
   token: null,
   csrf_token: null,
-  setNotification: () => {},
-});
+};
 
-export default AuthContext;
+const AuthProvider = (props) => {
+  return (
+    <AuthContext.Provider value={defaultAuth}>
+      {props.children}
+    </AuthContext.Provider>
+  );
+};
+
+export default AuthProvider;

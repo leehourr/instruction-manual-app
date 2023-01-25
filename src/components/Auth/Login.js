@@ -1,35 +1,52 @@
-import React, { Fragment, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useFetcher } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import reading from "../../assets/reading.gif";
-import ReactDOM from "react-dom";
 
 const Login = () => {
   const inputEmail = useRef();
   const inputPassword = useRef();
   const fetcher = useFetcher();
   const [invalidEmail, setInvalidEmail] = useState("");
-  const [invalidPassword, setInvlaidPassword] = useState("");
+  const [invalidPassword, setInvalidPassword] = useState("");
+
+  let error = sessionStorage?.getItem("errorMessage");
+
+  // sessionStorage.removeItem("errorMessage");
+  useEffect(() => {
+    return sessionStorage.removeItem("errorMessage");
+  }, []);
 
   const loginHandler = (e) => {
     e.preventDefault();
     const email = inputEmail.current.value;
     const password = inputPassword.current.value;
     setInvalidEmail("");
-    setInvlaidPassword("");
+    setInvalidPassword("");
 
-    validateInput(email, password);
-    fetcher.submit({ email, password }, { method: "post", action: "/login" });
+    if (validateInput(email, password)) {
+      fetcher.submit({ email, password }, { method: "post", action: "/login" });
+    }
   };
 
   const validateInput = (email, password) => {
+    let isEmailValid = true;
+    let isPassValid = true;
+
     if (!email.includes("@") && !email.includes(".")) {
-      setInvalidEmail("Invalid email format");
+      setInvalidEmail("Invalid email format.");
+      isEmailValid = false;
     }
+
     if (password.length < 6) {
-      setInvlaidPassword("Password must be 6 characters long");
+      setInvalidPassword("Password must be 6 characters long.");
+      isPassValid = false;
     }
-    return;
+
+    if (!isEmailValid || !isPassValid) {
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -39,9 +56,14 @@ const Login = () => {
         src={reading}
         alt="reading"
       />
-      <h1 className="uppercase my-4 font-bold text-2xl sm:text-3xl">
+      <h1 className="uppercase my-4 font-bold text-2xl  sm:text-3xl">
         Instruction manuals
       </h1>
+      {error && (
+        <p className="bg-red-500 tracking-wide w-[80%] my-4 text-center rounded-sm font-semibold py-1  sm:w-[23rem]">
+          {error}
+        </p>
+      )}
       <form
         onSubmit={loginHandler}
         className="w-full flex flex-col items-center justify-center"
@@ -53,7 +75,7 @@ const Login = () => {
         >
           <input
             ref={inputEmail}
-            className="w-full block bg-zinc-700 h-9 px-2 rounded-lg outline-none caret-pink-600 border-b-4 border-b-transparent focus:border-b-pink-600"
+            className="w-full block bg-zinc-700 h-9 px-2 rounded-lg outline-none caret-cyan-300 border-b-2 border-b-transparent focus:border-b-cyan-300"
             type="text"
             placeholder="Email"
             name="email"
@@ -70,7 +92,7 @@ const Login = () => {
         >
           <input
             ref={inputPassword}
-            className=" w-full bg-zinc-700 h-9 px-2 rounded-lg outline-none caret-pink-600  border-b-4 border-b-transparent focus:border-b-pink-600"
+            className=" w-full bg-zinc-700 h-9 px-2 rounded-lg outline-none caret-cyan-300  border-b-2 border-b-transparent focus:border-b-cyan-300"
             type="password"
             placeholder="Password"
             name="password"
@@ -88,7 +110,7 @@ const Login = () => {
         </button>
         <p>
           Don't have an account ?
-          <Link to="/Signup" className="text-pink-400 ml-1 font-semibold">
+          <Link to="/Signup" className="text-cyan-300 ml-1 font-semibold">
             Sign up
           </Link>
         </p>

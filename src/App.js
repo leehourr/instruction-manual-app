@@ -4,36 +4,46 @@ import AdminDashbord from "./pages/AdminDashbord";
 import Home, { loader as getManuals } from "./pages/Home";
 import Layout from "./pages/Layout";
 import Profile from "./pages/Profile";
-import Upload from "./pages/Upload";
 import AuthLogin, { action as login } from "./pages/AuthLogin";
-import AuthSignup from "./pages/AuthSignup";
+import AuthSignup, { action as signup } from "./pages/AuthSignup";
+import AuthError from "./pages/AuthError";
+// import Login from "./components/Auth/Login";
+import { Unauthzeried } from "./pages/Unauthzeried";
+import UserManuals, { loader as getYourManuals } from "./pages/UserManuals";
 
 const router = createBrowserRouter([
   {
     path: "/Login",
     element: <AuthLogin />,
+    errorElement: <AuthError />,
     action: login,
+    children: [
+      { path: "/Login/attemp", element: <AuthLogin />, action: login },
+    ],
   },
   {
     path: "/Signup",
     element: <AuthSignup />,
-  },
-  {
-    path: "/:name",
-    element: <Profile />,
+    action: signup,
   },
   {
     path: "/",
     element: <Layout />,
     children: [
       {
+        path: "/:name",
+        element: <Profile />,
+      },
+      {
         path: "/",
         element: <Home />,
         loader: getManuals,
       },
       {
-        path: "/upload-manual",
-        element: <Upload />,
+        path: "/your-manuals",
+        element: <UserManuals />,
+        errorElement: <Unauthzeried />,
+        loader: getYourManuals,
       },
       {
         path: "pending-manuals",

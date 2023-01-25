@@ -1,15 +1,59 @@
 import axios from "axios";
 import { LoadingStimulate } from "./LoadingStimulate";
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
+
+const getToken = () => {
+  const token =
+    document.cookie
+      .split("; ")
+      ?.find((row) => row.startsWith("token"))
+      ?.split("=")[1] || null;
+  console.log(token);
+  return token;
+};
+
+export function checkCookieExists(key) {
+  if (
+    document.cookie.split(";").some((item) => item.trim()?.startsWith(`${key}`))
+  ) {
+    return true;
+  }
+  return false;
+}
+// console.log("check cookie");
+// console.log(checkACookieExists("token"));
+export const clearAllCookies = () => {
+  var res = document.cookie;
+  var multiple = res.split(";");
+  for (var i = 0; i < multiple.length; i++) {
+    var key = multiple[i].split("=");
+    document.cookie = key[0] + " =; expires = Thu, 01 Jan 1970 00:00:00 UTC";
+  }
+};
 
 const api = axios.create({
   baseURL: "http://127.0.0.1:8000/api",
 });
 
+api.interceptors.request.use(
+  (config) => {
+    const token = getToken();
+    console.log(token);
+    if (token !== null) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 //============= LOGIN REQUEST ====================
-export const signUp = async () => {
-  const response = await api.get("/auth/logout").catch((e) => {
+export const signUp = async (credential) => {
+  const response = await api.post("/auth/logout", credential).catch((e) => {
     errorHandler(e);
   });
   return response.data;
@@ -17,19 +61,20 @@ export const signUp = async () => {
 
 //============= LOGIN REQUEST ====================
 export const signIn = async (credential) => {
-  await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
+  // await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
   const response = await api.post("/auth/login", credential).catch((e) => {
     errorHandler(e);
   });
-
-  const user = api.post("/your-manuals", { user_id: 2 });
-  console.log(user);
   return response.data;
 };
 
 //============= LOGOUT REQUEST ====================
 export const signOut = async () => {
-  const response = await api.get("/auth/logout").catch((e) => {
+  // console.log("token in signout");
+
+  // console.log(token);
+
+  const response = await api.post("/auth/logout").catch((e) => {
     errorHandler(e);
   });
   return response.data;
@@ -54,9 +99,10 @@ export const searchManual = async (name) => {
 };
 
 //============= GET YOUR MANUALS REQUEST ====================
-export const getYourManuals = async () => {
+export const getYourManuals = async (uid) => {
   await LoadingStimulate(1500);
-  const response = await api.get("/your-manuals").catch((e) => {
+  // console.log(config);
+  const response = await api.post("/your-manuals", uid).catch((e) => {
     errorHandler(e);
   });
   return response.data;
@@ -83,10 +129,12 @@ export const getPendingManuals = async () => {
 //
 function errorHandler(error) {
   if (error.response) {
+    console.log("error1");
+
     console.log(error.response.data);
     console.log(error.response.status);
     console.log(error.response.headers);
-    throw new Response(error.response.data);
+    throw error.response;
   } else if (error.request) {
     console.log(error.request);
   } else {

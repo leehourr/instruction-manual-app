@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body {
-  background: linear-gradient(176deg,rgb(18,24,27) 50%,rgb(32,39,55) 100%);
+  /* background: linear-gradient(176deg,rgb(18,24,27) 50%,rgb(32,39,55) 100%); */
+  background: #18181B;
   margin: 0;
   background-attachment: fixed;
   /* position: absolute; */
@@ -19,11 +20,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-background: red; 
+background: #27272A; 
 }
 
 ::-webkit-scrollbar-thumb {
-background: blue; 
+background: #52525B; 
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
