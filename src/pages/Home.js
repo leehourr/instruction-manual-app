@@ -1,12 +1,6 @@
 import React, { useEffect, useMemo, Suspense, useState } from "react";
 import ManualItems from "../components/Manual/ManualItems";
-import {
-  defer,
-  useLoaderData,
-  useNavigate,
-  Await,
-  Link,
-} from "react-router-dom";
+import { defer, useLoaderData, useNavigate, Await } from "react-router-dom";
 import { getManuals } from "../utils/api.js";
 import ReactDOM from "react-dom";
 import { Backdrop } from "../components/ui/Backdrop";
@@ -23,10 +17,12 @@ const Home = () => {
 
   useEffect(() => {
     if (accCreated) {
-      console.log(accCreated);
+      // console.log(accCreated);
       setIsNewAcc(true);
     }
   }, [accCreated]);
+
+  // console.log(loadedData);
 
   const closeModal = () => {
     sessionStorage.removeItem("signUp");

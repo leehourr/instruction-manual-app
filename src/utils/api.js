@@ -9,7 +9,7 @@ const getToken = () => {
       .split("; ")
       ?.find((row) => row.startsWith("token"))
       ?.split("=")[1] || null;
-  console.log(token);
+  // console.log(token);
   return token;
 };
 
@@ -39,7 +39,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = getToken();
-    console.log(token);
+    // console.log(token);
     if (token !== null) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -75,6 +75,15 @@ export const signOut = async () => {
   // console.log(token);
 
   const response = await api.post("/auth/logout").catch((e) => {
+    errorHandler(e);
+  });
+  return response.data;
+};
+
+//============= ADD MANUALS REQUEST ====================
+export const uploadManual = async (manual) => {
+  await LoadingStimulate(1500);
+  const response = await api.post("/manuals", manual).catch((e) => {
     errorHandler(e);
   });
   return response.data;
@@ -118,9 +127,9 @@ export const getComplaints = async () => {
 };
 
 //============= GET PENDING MANUALS ====================
-export const getPendingManuals = async () => {
+export const getPendingManuals = async (uid) => {
   await LoadingStimulate(1500);
-  const response = await api.get("/admin/pending-manuals").catch((e) => {
+  const response = await api.post("/admin/pending-manuals", uid).catch((e) => {
     errorHandler(e);
   });
   return response.data;

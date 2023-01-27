@@ -1,16 +1,35 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import YourManuals from "../components/Manual/YourManuals";
-import { defer, useLoaderData, Await, useRouteError } from "react-router-dom";
-import { getYourManuals, getToken } from "../utils/api";
+import {
+  defer,
+  useLoaderData,
+  Await,
+  Outlet,
+  useNavigate,
+} from "react-router-dom";
+import { getYourManuals } from "../utils/api";
 import cat_what from "../assets/cat-what.gif";
 
 const UserManuals = () => {
   const loadedData = useLoaderData();
-  // console.log("upload page");
+  const [hasData, setHasData] = useState(true);
+  const [isFormOpened, setIsFormOpened] = useState(false);
+  const navigate = useNavigate();
+  // console.log("isDisabled");
+  // console.log(hasDatas);
 
-  // console.log(loadedData.Manuals);
-  // const err = useRouteError();
-  // console.log(err);
+  useEffect(() => {
+    loadedData.Manuals.then((res) => {
+      if (res.status) {
+        setHasData(false);
+      }
+    });
+  }, [loadedData.Manuals]);
+
+  const openForm = () => {
+    setIsFormOpened(true);
+    navigate("/your-manuals/upload", "/your-manuals");
+  };
 
   return (
     <>
@@ -18,11 +37,18 @@ const UserManuals = () => {
         <h1 className="mb-2  font-mono text-2xl sm:text-4xl font-bold uppercase">
           Your manuals
         </h1>
-        <button className="rounded-lg transition-all duration-100 font-bold tracking-wide px-4 shadow-lg hover:shadow-cyan-300 active:shadow-cyan-300 hover:bg-cyan-300   hover:text-zinc-900 hover:scale-125 active:scale-150 hover:border-cyan-300 text-cyan-300 border-2 p-2 border-cyan-300">
+        <button
+          disabled={hasData}
+          onClick={openForm}
+          className={`${
+            hasData ? "cursor-not-allowed" : " cursor-pointer"
+          } rounded-lg transition-all duration-100 font-bold tracking-wide px-4 shadow-lg hover:shadow-cyan-300 active:shadow-cyan-300 hover:bg-cyan-300   hover:text-zinc-900 hover:scale-125 active:scale-150 hover:border-cyan-300 text-cyan-300 border-2 p-2 border-cyan-300`}
+        >
           Upload manual
         </button>
         <div className="mx-auto w-24 h-1 mt-4 mb-8 sm:mt-6 sm:mb-10 bg-zinc-300 rounded-full"></div>
       </div>
+      <Outlet />
       <Suspense
         fallback={
           <img

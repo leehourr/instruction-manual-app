@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { redirect, useNavigate, useRouteError } from "react-router-dom";
+import  { useEffect } from "react";
+import {  useNavigate, useRouteError } from "react-router-dom";
 
 export const Unauthzeried = () => {
   const err = useRouteError();

@@ -12,6 +12,13 @@ const MainNav = () => {
     .split("; ")
     ?.find((row) => row?.startsWith("name"))
     ?.split("=")[1];
+
+  const role =
+    document?.cookie
+      .split("; ")
+      ?.find((row) => row?.startsWith("role"))
+      ?.split("=")[1] || "";
+
   const navigateToLogin = () => {
     navigate("/login");
   };
@@ -43,14 +50,28 @@ const MainNav = () => {
             </NavLink>
           </li>
           <li className="self-center">
-            <NavLink
-              to="/your-manuals"
-              className={({ isActive }) =>
-                isActive ? "text-cyan-300" : "text-white"
-              }
-            >
-              Your manuals
-            </NavLink>
+            {(role === "user" || role === "") && (
+              <NavLink
+                to="/your-manuals"
+                className={({ isActive }) =>
+                  isActive ? "text-cyan-300" : "text-white"
+                }
+              >
+                Your manuals
+              </NavLink>
+            )}
+          </li>
+          <li className="self-center">
+            {role === "admin" && (
+              <NavLink
+                to="/pending-manuals"
+                className={({ isActive }) =>
+                  isActive ? "text-cyan-300" : "text-white"
+                }
+              >
+                Pending manuals
+              </NavLink>
+            )}
           </li>
           <li className="flex relative self-center">
             <span className="text-gray-400 w-4 absolute top-[0.6rem] left-4">
@@ -63,6 +84,7 @@ const MainNav = () => {
               placeholder="Search manual"
             />
           </li>
+
           <li className="group self-center ml-24 cursor-pointer ">
             {!checkCookieExists("token") ? (
               <button

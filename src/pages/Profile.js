@@ -22,7 +22,7 @@ const Profile = () => {
         {name}
       </h1>
       <div className="mx-auto w-24 h-1 my-6 sm:my-10 bg-zinc-300 rounded-full"></div>
-      <div className="text-left w-[30%] mx-auto">
+      <div className="text-left w-[80%] sm:w-[30%] mx-auto">
         <p className="text-s sm:text-xl font-semibold">
           Account Email:
           <span className="font-bold text-cyan-300"> {email}</span>
