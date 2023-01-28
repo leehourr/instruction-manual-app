@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { Link, useFetcher } from "react-router-dom";
+import AuthContext from "../../Context/Auth-context";
 // import { Link } from "react-router-dom";
 import reading from "../../assets/reading.gif";
 
 const Login = () => {
+  const AuthCtx = useContext(AuthContext);
   const inputEmail = useRef();
   const inputPassword = useRef();
   const fetcher = useFetcher();
@@ -25,7 +27,9 @@ const Login = () => {
     setInvalidPassword("");
 
     if (validateInput(email, password)) {
-      fetcher.submit({ email, password }, { method: "post", action: "/login" });
+      console.log("context in login");
+      // fetcher.submit({ email, password }, { method: "post", action: "/login" });
+      AuthCtx.onLogin({ email, password });
     }
   };
 

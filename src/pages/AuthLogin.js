@@ -1,11 +1,21 @@
-import React, { useMemo } from "react";
-import { Navigate, redirect } from "react-router-dom";
+import React, { useContext, useMemo } from "react";
+import {
+  Navigate,
+  redirect,
+  defer,
+  useActionData,
+  useLoaderData,
+  useFetcher,
+} from "react-router-dom";
 import Login from "../components/Auth/Login";
 import { signIn, checkCookieExists } from "../utils/api";
 
 const AuthLogin = () => {
   // const [credential, setCredential] = useState();
   // const navigate = useNavigate();
+  const loadedData = useActionData();
+  console.log("loaded data");
+  console.log(loadedData);
 
   const hasToken = useMemo(() => checkCookieExists("token"), []);
   // console.log("check cookie in login");
@@ -32,6 +42,9 @@ export const action = async ({ request }) => {
   const credential = { email: email, password: password };
   // console.log("login");
   const user_data = await signIn(credential);
+  // return defer({
+  //   Credential: signIn(credential),
+  // });
   // console.log("login");
   // console.log(user_data);
   // console.log(user_data.token);
@@ -43,14 +56,6 @@ export const action = async ({ request }) => {
     document.cookie = `name=${user_data.name}; SameSite=Lax; Secure`;
     document.cookie = `email=${user_data.email}; SameSite=Lax; Secure`;
     document.cookie = `role=${user_data.role}; SameSite=Lax; Secure`;
-
-    // console.log(
-    //   "get uid " +
-    //     document.cookie
-    //       .split("; ")
-    //       .find((row) => row.startsWith("name"))
-    //       .split("=")[1]
-    // );
   }
 
   //   // console.log(error);
@@ -61,5 +66,5 @@ export const action = async ({ request }) => {
   //   console.log(" supp");
   //   throw new Response(login.message);
   // }
-  return redirect("/");
+  return user_data;
 };

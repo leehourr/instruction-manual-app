@@ -12,15 +12,21 @@ import AuthError from "./pages/AuthError";
 import { Unauthzeried } from "./pages/Unauthzeried";
 import UserManuals, { loader as getYourManuals } from "./pages/UserManuals";
 import UploadManuals, { action as addManual } from "./pages/UploadManuals";
+import Login from "./components/Auth/Login";
+import AuthProvider from "./Context/AuthProvider";
 
 const router = createBrowserRouter([
   {
     path: "/Login",
-    element: <AuthLogin />,
-    errorElement: <AuthError />,
-    action: login,
+    element: <Login />,
+    // errorElement: <AuthError />,
+    // action: login,
     children: [
-      { path: "/Login/attemp", element: <AuthLogin />, action: login },
+      {
+        path: "/Login/attemp",
+        element: <Login />,
+        // action: login
+      },
     ],
   },
   {
@@ -65,7 +71,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />;
+    </AuthProvider>
+  );
 }
 
 export default App;

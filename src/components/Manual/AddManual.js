@@ -9,39 +9,56 @@ const AddManual = ({ navBack }) => {
   const fetch = useFetcher();
   const inputTitle = useRef();
   const inputDesc = useRef();
-  const [uploadedImg, setUploadedImg] = useState();
-  const [imgUrl, setImgUrl] = useState();
-  // const inputImagePath = useRef();
+  const [uploadedImg, setUploadedImg] = useState(null);
+  // const [imgUrl, setImgUrl] = useState();
 
   const getImg = (e) => {
     setUploadedImg(e.target.files[0]);
   };
-  console.log(uploadedImg);
-  const uploadFile = () => {
-    if (uploadedImg == null) return;
-    const imageRef = ref(
+
+  const uploadImg = async () => {
+    // console.log("selected img");
+    // console.log(uploadedImg);
+
+    if (uploadedImg.name === null) return;
+    const imageRef = await ref(
       storage,
       `images/${uploadedImg.name + crypto.randomUUID()}`
     );
-    uploadBytes(imageRef, uploadedImg).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        setImgUrl(url);
-      });
-    });
+    // console.log("after storages");
+    const imgPath = await uploadBytes(imageRef, uploadedImg).then(
+      async (snapshot) => {
+        const path = await getDownloadURL(snapshot.ref).then((url) => {
+          // console.log("in upload");
+          // console.log(url);
+          return url;
+        });
+        // console.log("after download");
+        // console.log(path);
+        return path;
+      }
+    );
+    // console.log("after upload");
+    // console.log(imgPath);
+    return imgPath;
   };
-  console.log(imgUrl);
+  // console.log(imgUrl);
 
-  // const uploadHandler = (e) => {
-  //   e.preventDefault();
-  //   const title = inputTitle.current.value;
-  //   const desc = inputDesc.current.value;
-  //   // const imgPath = inputImagePath.current.value;
+  const uploadHandler = async (e) => {
+    e.preventDefault();
+    const title = inputTitle.current.value;
+    const desc = inputDesc.current.value;
+    const getImgUrl = await uploadImg();
+    // setImgUrl(getImgUrl);
+    // console.log("img url");
+    // console.log(getImgUrl);
+    // const imgPath = inputImagePath.current.value;
 
-  //   fetch.submit(
-  //     { title, desc },
-  //     { method: "post", action: "/your-manuals/upload" }
-  //   );
-  // };
+    await fetch.submit(
+      { title, desc, imgUrl: getImgUrl },
+      { method: "post", action: "/your-manuals/upload" }
+    );
+  };
 
   return (
     <>
@@ -51,7 +68,7 @@ const AddManual = ({ navBack }) => {
       )}
       {ReactDOM.createPortal(
         <form
-          // onSubmit={uploadHandler}
+          onSubmit={uploadHandler}
           className="fixed overflow-y-scroll text-white top-0 left-1/2 -translate-x-1/2 z-50 w-[60%] h-full bg-zinc-700 mx-auto"
         >
           <button

@@ -8,7 +8,7 @@ const Card = ({ created_at, uploaded_by, img, name, desc, status }) => {
     dateStyle: "medium",
   });
 
-  console.log(status);
+  // console.log(status);
 
   const role = document?.cookie
     .split("; ")
@@ -18,7 +18,7 @@ const Card = ({ created_at, uploaded_by, img, name, desc, status }) => {
   const isPending = role === "admin" && status === "pending";
   //console.log(dateFormat.format(date));
   return (
-    <div className="my-3 sm:my-4 overflow-hidden w-[20rem] hover:scale-110 transition-all duration-150 font-bold sm:w-[22rem]  h-full rounded-xl flex flex-col items-center justify-center text-left mx-auto 2xl:mx-[4px] cursor-pointer bg-zinc-800">
+    <div className="my-3 sm:my-4 overflow-hidden w-[20rem] hover:scale-110 active:scale-125 transition-all duration-150 font-bold sm:w-[22rem]  h-full rounded-xl flex flex-col items-center justify-center text-left mx-auto 2xl:mx-[4px] cursor-pointer bg-zinc-800">
       <div className="w-full h-72">
         <img
           className="mx-auto w-full h-full text-center  self-start object-fit rounded-t-xl mb-2"

@@ -1,8 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { useParams } from "react-router-dom";
 import Logout from "../components/Auth/Logout";
-import { signOut } from "../utils/api";
 
 const Profile = () => {
   const param = useParams();

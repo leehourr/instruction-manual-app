@@ -2,9 +2,12 @@ import React from "react";
 
 const AuthContext = React.createContext({
   message: "",
-  token: null,
-  csrf_token: null,
-  setNotification: () => {},
+  name: "",
+  email: "",
+  role: "",
+  // csrf_token: null,
+  onLogin: (credential) => {},
+  onLogout: () => {},
 });
 
 export default AuthContext;

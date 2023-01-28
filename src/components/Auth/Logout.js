@@ -6,8 +6,8 @@ import { signOut, clearAllCookies } from "../../utils/api";
 const Logout = () => {
   const nav = useNavigate();
   const logout = async () => {
-    const res = await signOut();
     console.log("logout");
+    const res = await signOut();
     if (res.status === true) {
       clearAllCookies();
       nav("/", { replace: true });

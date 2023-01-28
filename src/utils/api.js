@@ -62,18 +62,13 @@ export const signUp = async (credential) => {
 //============= LOGIN REQUEST ====================
 export const signIn = async (credential) => {
   // await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
-  const response = await api.post("/auth/login", credential).catch((e) => {
-    errorHandler(e);
-  });
+  const response = await api.post("/auth/login", credential);
   return response.data;
 };
 
 //============= LOGOUT REQUEST ====================
 export const signOut = async () => {
-  // console.log("token in signout");
-
-  // console.log(token);
-
+  console.log("token in signout");
   const response = await api.post("/auth/logout").catch((e) => {
     errorHandler(e);
   });
@@ -82,6 +77,7 @@ export const signOut = async () => {
 
 //============= ADD MANUALS REQUEST ====================
 export const uploadManual = async (manual) => {
+  console.log(manual);
   await LoadingStimulate(1500);
   const response = await api.post("/manuals", manual).catch((e) => {
     errorHandler(e);
