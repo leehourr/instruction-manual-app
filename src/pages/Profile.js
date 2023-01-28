@@ -1,19 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import Logout from "../components/Auth/Logout";
+import AuthContext from "../Context/Auth-context";
 
 const Profile = () => {
   const param = useParams();
-  // console.log(param.name);
   const name = param.name;
-  const email = document.cookie
-    .split("; ")
-    ?.find((row) => row.startsWith("email"))
-    .split("=")[1];
-  const role = document.cookie
-    .split("; ")
-    ?.find((row) => row.startsWith("role"))
-    .split("=")[1];
+  const authCtx = useContext(AuthContext);
+
+  const email = authCtx.email;
+  const role = authCtx.role;
   return (
     <div className="text-white text-center  w-[80%] sm:w-[70%]  mx-auto">
       <h1 className="mb-2 font-mono text-cyan-300 text-2xl sm:text-4xl font-bold uppercase">

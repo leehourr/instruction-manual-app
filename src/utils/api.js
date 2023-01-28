@@ -7,7 +7,7 @@ const getToken = () => {
   const token =
     document.cookie
       .split("; ")
-      ?.find((row) => row.startsWith("token"))
+      ?.find((row) => row.startsWith("api_token"))
       ?.split("=")[1] || null;
   // console.log(token);
   return token;

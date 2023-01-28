@@ -19,18 +19,19 @@ const Login = () => {
     return sessionStorage.removeItem("errorMessage");
   }, []);
 
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
     const email = inputEmail.current.value;
     const password = inputPassword.current.value;
     setInvalidEmail("");
     setInvalidPassword("");
-
+    let res;
     if (validateInput(email, password)) {
       console.log("context in login");
       // fetcher.submit({ email, password }, { method: "post", action: "/login" });
-      AuthCtx.onLogin({ email, password });
+      res = await AuthCtx.onLogin({ email, password });
     }
+    console.log(res);
   };
 
   const validateInput = (email, password) => {

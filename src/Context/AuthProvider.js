@@ -7,11 +7,31 @@ const AuthProvider = (props) => {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
+  // console.log(name);
+  // console.log(email);
+  // console.log(message);
+  // console.log(role);
 
   const loginHandler = async (credential) => {
-    console.log("inContext");
     const res = await signIn(credential);
-    console.log(res);
+    const statCode = res.status;
+    // console.log(res);
+
+    if (statCode === 513) {
+      // console.log(res.errors.email[0]);
+      setMessage(res.errors.email[0]);
+      return res;
+    }
+    if (statCode === 401) {
+      // console.log(res.message);
+      setMessage(res.message);
+      return res;
+    }
+    setName(res.name);
+    setEmail(res.email);
+    setRole(res.role);
+    document.cookie = `api_token=${res.token}; SameSite=Lax; Secure`;
+    return res;
   };
 
   const logoutHandler = async () => {

@@ -11,24 +11,7 @@ import Login from "../components/Auth/Login";
 import { signIn, checkCookieExists } from "../utils/api";
 
 const AuthLogin = () => {
-  // const [credential, setCredential] = useState();
-  // const navigate = useNavigate();
-  const loadedData = useActionData();
-  console.log("loaded data");
-  console.log(loadedData);
-
   const hasToken = useMemo(() => checkCookieExists("token"), []);
-  // console.log("check cookie in login");
-
-  // useEffect(() => {
-  //   return sessionStorage.removeItem("errorMessage");
-  // }, []);
-  // console.log(hasToken);
-
-  //
-  // if (checkCookie) {
-  //
-  // }
 
   return <div>{hasToken ? <Navigate replace to="/" /> : <Login />}</div>;
 };
