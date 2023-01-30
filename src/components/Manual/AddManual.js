@@ -78,14 +78,14 @@ const AddManual = ({ navBack }) => {
             Esc
           </button>
           <label
-            className="cursor-pointer border-2 text-cyan-300 block mx-auto text-center w-1/2 mt-4 mb-6 py-12 font-bold  border-cyan-300"
+            className="cursor-pointer relative border-2 text-cyan-300 block mx-auto text-center w-2/5 h-64 mt-4 mb-6 font-bold  border-cyan-300"
             htmlFor="uploadedImage"
           >
             {!uploadedImg ? (
-              "Upload image"
+              <p className="">Upload image</p>
             ) : (
               <img
-                className="w-full h-full object-fit"
+                className="w-full h-full object-contain"
                 src={URL.createObjectURL(uploadedImg)}
                 alt="img"
               />

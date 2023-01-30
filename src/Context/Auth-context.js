@@ -1,11 +1,9 @@
 import React from "react";
 
 const AuthContext = React.createContext({
-  message: "",
-  name: "",
-  email: "",
-  role: "",
-  // csrf_token: null,
+  // message: "",
+  onGetUser: () => {},
+  onSignUp: (credential) => {},
   onLogin: (credential) => {},
   onLogout: () => {},
 });

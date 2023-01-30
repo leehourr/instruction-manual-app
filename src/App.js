@@ -4,8 +4,8 @@ import PendingManuals, {
   loader as getPendingManuals,
 } from "./pages/PendingManuals";
 import Home, { loader as getManuals } from "./pages/Home";
-import Layout from "./pages/Layout";
-import Profile from "./pages/Profile";
+import Layout, { loader as getUser } from "./pages/Layout";
+import Profile, { loader as userData } from "./pages/Profile";
 import AuthLogin, { action as login } from "./pages/AuthLogin";
 import AuthSignup, { action as signup } from "./pages/AuthSignup";
 import AuthError from "./pages/AuthError";
@@ -21,27 +21,22 @@ const router = createBrowserRouter([
     element: <Login />,
     // errorElement: <AuthError />,
     // action: login,
-    children: [
-      {
-        path: "/Login/attemp",
-        element: <Login />,
-        // action: login
-      },
-    ],
   },
   {
     path: "/Signup",
     element: <AuthSignup />,
-    errorElement: <AuthError />,
-    action: signup,
+    // errorElement: <AuthError />,
+    // action: signup,
   },
   {
     path: "/",
     element: <Layout />,
+    loader: getUser,
     children: [
       {
         path: "/:name",
         element: <Profile />,
+        loader: userData,
       },
       {
         path: "/",

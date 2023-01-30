@@ -51,11 +51,14 @@ const UserManuals = () => {
       <Outlet />
       <Suspense
         fallback={
-          <img
-            className="mx-auto w-[70%] sm:w-[20%]"
-            src={cat_what}
-            alt="Loading..."
-          />
+          // <img
+          //   className="mx-auto w-[70%] sm:w-[20%]"
+          //   src={cat_what}
+          //   alt="Loading..."
+          // />
+          <h1 className="mt-24 font-mono text-center text-cyan-300 text-2xl sm:text-4xl font-bold uppercase">
+            Loading...
+          </h1>
         }
       >
         <Await
@@ -76,15 +79,15 @@ const UserManuals = () => {
 export default UserManuals;
 
 export const loader = async () => {
-  const getId = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("uid="))
-    ?.split("=")[1];
-  const uid = { user_id: getId }; // console.log("in aciton");
+  // const getId = document.cookie
+  //   .split("; ")
+  //   .find((row) => row.startsWith("uid="))
+  //   ?.split("=")[1];
+  // const uid = { user_id: getId }; // console.log("in aciton");
   // console.log(uid);
   // const manuals = await getYourManuals(uid);
   // console.log(manuals);
   return defer({
-    Manuals: getYourManuals(uid),
+    Manuals: getYourManuals(),
   });
 };

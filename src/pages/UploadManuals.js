@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React from "react";
 import AddManual from "../components/Manual/AddManual";
 import { redirect, useNavigate } from "react-router-dom";
 import { uploadManual } from "../utils/api";

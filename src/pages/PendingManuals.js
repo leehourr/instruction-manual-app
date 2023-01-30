@@ -21,11 +21,14 @@ const PendingManuals = () => {
       </div>
       <Suspense
         fallback={
-          <img
-            className="mx-auto w-[70%] sm:w-[20%]"
-            src={cat_what}
-            alt="Loading..."
-          />
+          // <img
+          //   className="mx-auto w-[70%] sm:w-[20%]"
+          //   src={cat_what}
+          //   alt="Loading..."
+          // />
+          <h1 className="mt-24 font-mono text-center text-cyan-300 text-2xl sm:text-4xl font-bold uppercase">
+            Loading...
+          </h1>
         }
       >
         <Await
@@ -36,7 +39,12 @@ const PendingManuals = () => {
             </p>
           }
         >
-          {(loadedData) => <ManualItems manuals={loadedData.pending_manuals} />}
+          {(loadedData) => (
+            <ManualItems
+              manuals={loadedData.pending_manuals}
+              isPending={true}
+            />
+          )}
         </Await>
       </Suspense>
       ;
@@ -47,12 +55,7 @@ const PendingManuals = () => {
 export default PendingManuals;
 
 export const loader = async () => {
-  const getId = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("uid="))
-    ?.split("=")[1];
-  const uid = { user_id: getId };
   return defer({
-    Manuals: getPendingManuals(uid),
+    Manuals: getPendingManuals(),
   });
 };

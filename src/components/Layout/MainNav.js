@@ -1,23 +1,25 @@
-import React from "react";
+import React, { useEffect, useContext, useMemo, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { checkCookieExists } from "../../utils/api";
-
+import { checkCookieExists, getUser } from "../../utils/api";
 import reading from "../../assets/reading.gif";
 import search from "../../assets/search_icon.svg";
-import user from "../../assets/user.svg";
+import userIcon from "../../assets/user.svg";
+import AuthContext from "../../Context/Auth-context";
 
-const MainNav = () => {
+const MainNav = ({ user }) => {
   const navigate = useNavigate();
-  const name = document?.cookie
-    .split("; ")
-    ?.find((row) => row?.startsWith("name"))
-    ?.split("=")[1];
-
-  const role =
-    document?.cookie
-      .split("; ")
-      ?.find((row) => row?.startsWith("role"))
-      ?.split("=")[1] || "";
+  const hasToken = checkCookieExists("api_token");
+  const name = user.name;
+  const role = user.role;
+  // useEffect(() => {
+  //   if (checkCookieExists("api_token")) {
+  //     setHasToken(true);
+  //     return;
+  //   }
+  //   setHasToken(false);
+  // }, []);
+  // const [name, setName] = useState("");
+  // const [role, setRole] = useState("");
 
   const navigateToLogin = () => {
     navigate("/login");
@@ -50,7 +52,7 @@ const MainNav = () => {
             </NavLink>
           </li>
           <li className="self-center">
-            {(role === "user" || role === "") && (
+            {(role === "user" || role === "" || !hasToken) && (
               <NavLink
                 to="/your-manuals"
                 className={({ isActive }) =>
@@ -62,7 +64,7 @@ const MainNav = () => {
             )}
           </li>
           <li className="self-center">
-            {role === "admin" && (
+            {role === "admin" && hasToken && (
               <NavLink
                 to="/pending-manuals"
                 className={({ isActive }) =>
@@ -86,7 +88,7 @@ const MainNav = () => {
           </li>
 
           <li className="group self-center ml-24 cursor-pointer ">
-            {!checkCookieExists("token") ? (
+            {!hasToken ? (
               <button
                 onClick={navigateToLogin}
                 className=" px-2 self-center rounded-md h-full sm:px-4 font-bold rounded-s shadow-lg bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 hover:shadow-pink-500 active:shadow-pink-500 "
@@ -98,7 +100,7 @@ const MainNav = () => {
                 <img
                   onClick={navigateToProfile}
                   className="stroke-pink-500 fill-pink-500 w-full h-full shadow-2xl rounded-full  group-hover:shadow-cyan-600 group-active:shadow-cyan-600 "
-                  src={user}
+                  src={userIcon}
                   alt=""
                 />
                 <NavLink

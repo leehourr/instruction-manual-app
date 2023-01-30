@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import { Link, useFetcher } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/Auth-context";
 // import { Link } from "react-router-dom";
 import reading from "../../assets/reading.gif";
@@ -8,13 +8,11 @@ const Login = () => {
   const AuthCtx = useContext(AuthContext);
   const inputEmail = useRef();
   const inputPassword = useRef();
-  const fetcher = useFetcher();
   const [invalidEmail, setInvalidEmail] = useState("");
   const [invalidPassword, setInvalidPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  let error = sessionStorage?.getItem("errorMessage");
-
-  // sessionStorage.removeItem("errorMessage");
   useEffect(() => {
     return sessionStorage.removeItem("errorMessage");
   }, []);
@@ -25,6 +23,8 @@ const Login = () => {
     const password = inputPassword.current.value;
     setInvalidEmail("");
     setInvalidPassword("");
+    setError("");
+
     let res;
     if (validateInput(email, password)) {
       console.log("context in login");
@@ -32,6 +32,17 @@ const Login = () => {
       res = await AuthCtx.onLogin({ email, password });
     }
     console.log(res);
+
+    if (res?.status === 200) {
+      return navigate("/", { replace: true });
+    }
+
+    if (res?.status === 513) {
+      setError(res.errors.email[0]);
+    }
+    if (res?.status === 401) {
+      setError(res.message);
+    }
   };
 
   const validateInput = (email, password) => {

@@ -51,6 +51,18 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+export const getUser = async () => {
+  const hasToken = await checkCookieExists("api_token");
+  if (hasToken) {
+    const response = await api.get("/user").catch((e) => {
+      errorHandler(e);
+    });
+    return response.data;
+  }
+  return { role: "" };
+};
+
 //============= SIGNUP REQUEST ====================
 export const signUp = async (credential) => {
   const response = await api.post("/auth/signup", credential).catch((e) => {
@@ -104,10 +116,10 @@ export const searchManual = async (name) => {
 };
 
 //============= GET YOUR MANUALS REQUEST ====================
-export const getYourManuals = async (uid) => {
+export const getYourManuals = async () => {
   await LoadingStimulate(1500);
   // console.log(config);
-  const response = await api.post("/your-manuals", uid).catch((e) => {
+  const response = await api.post("/your-manuals").catch((e) => {
     errorHandler(e);
   });
   return response.data;
@@ -123,9 +135,17 @@ export const getComplaints = async () => {
 };
 
 //============= GET PENDING MANUALS ====================
-export const getPendingManuals = async (uid) => {
+export const getPendingManuals = async (update) => {
   await LoadingStimulate(1500);
-  const response = await api.post("/admin/pending-manuals", uid).catch((e) => {
+  if (update) {
+    const response = await api
+      .post("/admin/pending-manuals", update)
+      .catch((e) => {
+        errorHandler(e);
+      });
+    return response.data;
+  }
+  const response = await api.post("/admin/pending-manuals").catch((e) => {
     errorHandler(e);
   });
   return response.data;
