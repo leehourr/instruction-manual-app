@@ -15,12 +15,12 @@ const AuthProvider = (props) => {
     const statCode = res.status;
     console.log(res);
 
-    if (statCode === 401 || statCode === 513) {
+    if (statCode === 401 || statCode === 513 || statCode === 403) {
       // console.log(res.message);
       return res;
     }
-
-    document.cookie = `api_token=${res.token}; SameSite=Lax; Secure`;
+    const expires = new Date(Date.now() + 86400 * 1000).toUTCString();
+    document.cookie = `api_token=${res.token}; SameSite=Lax; Secure; expires=${expires}`;
     return res;
   };
 

@@ -2,7 +2,6 @@ import axios from "axios";
 import { LoadingStimulate } from "./LoadingStimulate";
 
 // axios.defaults.withCredentials = true;
-
 const getToken = () => {
   const token =
     document.cookie
@@ -24,12 +23,11 @@ export function checkCookieExists(key) {
 // console.log("check cookie");
 // console.log(checkACookieExists("token"));
 export const clearAllCookies = () => {
-  var res = document.cookie;
-  var multiple = res.split(";");
-  for (var i = 0; i < multiple.length; i++) {
-    var key = multiple[i].split("=");
-    document.cookie = key[0] + " =; expires = Thu, 01 Jan 1970 00:00:00 UTC";
-  }
+  document.cookie =
+    "api_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  // var multiple = res.split(";");
+  // for (var i = 0; i < multiple.length; i++) {
+  //   var key = multiple[i].split("=");
 };
 
 const api = axios.create({
@@ -63,6 +61,39 @@ export const getUser = async () => {
   return { role: "" };
 };
 
+export const getUserList = async () => {
+  const hasToken = await checkCookieExists("api_token");
+  if (hasToken) {
+    const response = await api.post("/auth/all-users").catch((e) => {
+      errorHandler(e);
+    });
+    return response.data;
+  }
+  return { role: "" };
+};
+
+export const banUser = async (id) => {
+  const hasToken = await checkCookieExists("api_token");
+  if (hasToken) {
+    const response = await api.post("/auth/ban-user", id).catch((e) => {
+      errorHandler(e);
+    });
+    return response.data;
+  }
+  return null;
+};
+
+export const unbanUser = async (id) => {
+  const hasToken = await checkCookieExists("api_token");
+  if (hasToken) {
+    const response = await api.post("/auth/unban-user", id).catch((e) => {
+      errorHandler(e);
+    });
+    return response.data;
+  }
+  return null;
+};
+
 //============= SIGNUP REQUEST ====================
 export const signUp = async (credential) => {
   const response = await api.post("/auth/signup", credential).catch((e) => {
@@ -91,10 +122,9 @@ export const signOut = async () => {
 export const uploadManual = async (manual) => {
   console.log(manual);
   await LoadingStimulate(1500);
-  const response = await api.post("/manuals", manual).catch((e) => {
+  await api.post("/manuals", manual).catch((e) => {
     errorHandler(e);
   });
-  return response.data;
 };
 
 //============= GET ALL MANUALS REQUEST ====================
@@ -110,6 +140,14 @@ export const getManuals = async () => {
 export const searchManual = async (name) => {
   await LoadingStimulate(1500);
   const response = await api.get(`/manuals/${name}`).catch((e) => {
+    errorHandler(e);
+  });
+  return response.data;
+};
+
+export const searchAllManual = async (name) => {
+  await LoadingStimulate(1500);
+  const response = await api.post(`/all-manuals/${name}`).catch((e) => {
     errorHandler(e);
   });
   return response.data;
@@ -137,7 +175,8 @@ export const getComplaints = async () => {
 //============= GET PENDING MANUALS ====================
 export const getPendingManuals = async (update) => {
   await LoadingStimulate(1500);
-  if (update) {
+  const hasToken = await checkCookieExists("api_token");
+  if (hasToken) {
     const response = await api
       .post("/admin/pending-manuals", update)
       .catch((e) => {
@@ -145,11 +184,32 @@ export const getPendingManuals = async (update) => {
       });
     return response.data;
   }
-  const response = await api.post("/admin/pending-manuals").catch((e) => {
-    errorHandler(e);
-  });
-  return response.data;
+  return { status: 403 };
 };
+
+export function getDataUri(url) {
+  return new Promise((resolve) => {
+    var image = new Image();
+    image.setAttribute("crossOrigin", "anonymous"); //getting images from external domain
+
+    image.onload = function () {
+      var canvas = document.createElement("canvas");
+      canvas.width = this.naturalWidth;
+      canvas.height = this.naturalHeight;
+
+      //next three lines for white background in case png has a transparent background
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#fff"; /// set white fill style
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      canvas.getContext("2d").drawImage(this, 0, 0);
+
+      resolve(canvas.toDataURL("image/jpeg"));
+    };
+
+    image.src = url;
+  });
+}
 
 //
 function errorHandler(error) {

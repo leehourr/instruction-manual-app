@@ -11,8 +11,8 @@ import { signUp } from "../utils/api";
 
 const AuthSignup = () => {
   const result = useActionData();
-  console.log("result in action");
-  console.log(result);
+  // console.log("result in action");
+  // console.log(result);
   return <Signup />;
 };
 

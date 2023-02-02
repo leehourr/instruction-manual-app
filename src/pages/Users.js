@@ -1,23 +1,22 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import { defer, useLoaderData, Await, useNavigate } from "react-router-dom";
-import { getPendingManuals, checkCookieExists } from "../utils/api";
-import PendingManual from "../components/Manual/PendingManual";
+import UserLists from "../components/Users/UserLists";
+import { checkCookieExists, getUserList } from "../utils/api";
 import loading from "../assets/loading.gif";
 
-const PendingManuals = () => {
-  const loadedData = useLoaderData();
+const Users = () => {
   const [isLoading, setIsloading] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [message, setMessage] = useState("");
+  const data = useLoaderData();
   const navigate = useNavigate();
-
   if (!checkCookieExists("api_token")) {
     navigate("/404", { replace: true });
   }
 
   useEffect(() => {
     setIsloading(true);
-    loadedData.Manuals.then((res) => {
+    data.userList.then((res) => {
       if (res.status === 401) {
         setIsloading(false);
         setMessage(res.message);
@@ -30,16 +29,14 @@ const PendingManuals = () => {
   }, []);
 
   return (
-    <>
-      <div className="text-white text-center relative  w-[80%] sm:w-[70%]  mx-auto">
-        <h1 className="mb-2 font-mono  text-2xl sm:text-4xl font-bold uppercase">
-          Pending Manuals
-        </h1>
-        <p className="text-s sm:text-xl text-zinc-300  ">
-          All these manuals waiting to be approved.
-        </p>
-        <div className="mx-auto w-24 h-1 my-6 sm:my-10 bg-zinc-300 rounded-full"></div>
-      </div>
+    <div className="text-white text-center relative  w-[80%] sm:w-[70%]  mx-auto">
+      <h1 className="mb-2 font-mono  text-2xl sm:text-4xl font-bold uppercase">
+        User Lists
+      </h1>
+      <p className="text-s sm:text-xl text-zinc-300  ">
+        List of all currently active and banned users.
+      </p>
+      <div className="mx-auto w-24 h-1 my-6 sm:my-10 bg-zinc-300 rounded-full"></div>
       <p className="text-white text-center text-xl sm:text-2xl">{message}</p>
       {isLoading && (
         <img className="w-24 mx-auto" src={loading} alt="loading..." />
@@ -47,41 +44,41 @@ const PendingManuals = () => {
       {isAuth && (
         <Suspense
           fallback={
-            // <img
-            //   className="mx-auto w-[70%] sm:w-[20%]"
-            //   src={cat_what}
-            //   alt="Loading..."
-            // />
             <h1 className="mt-24 font-mono text-center text-cyan-300 text-2xl sm:text-4xl font-bold uppercase">
               Loading...
             </h1>
           }
         >
           <Await
-            resolve={loadedData.Manuals}
-            errorElement={
+            resolve={data.userList}
+            errorElement={() => {
               <p className="text-white font-bold text-s sm:text-lg text-center ">
-                Error loading manuals.
-              </p>
-            }
+                Error loading users.
+              </p>;
+            }}
           >
-            {(loadedData) => (
-              <PendingManual
-                manuals={loadedData.pending_manuals}
-                isPending={true}
-              />
-            )}
+            {(loadedData) =>
+              loadedData.users.map((i) => (
+                <UserLists
+                  key={i.id}
+                  id={i.id}
+                  email={i.email}
+                  name={i.name}
+                  status={i.status}
+                />
+              ))
+            }
           </Await>
         </Suspense>
       )}
-    </>
+    </div>
   );
 };
 
-export default PendingManuals;
+export default Users;
 
 export const loader = async () => {
   return defer({
-    Manuals: getPendingManuals(),
+    userList: getUserList(),
   });
 };

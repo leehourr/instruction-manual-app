@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useMemo, useState } from "react";
+import React, { useEffect, useContext, useMemo, useState, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { checkCookieExists, getUser } from "../../utils/api";
 import reading from "../../assets/reading.gif";
@@ -7,10 +7,12 @@ import userIcon from "../../assets/user.svg";
 import AuthContext from "../../Context/Auth-context";
 
 const MainNav = ({ user }) => {
+  const inputSearchManual = useRef();
   const navigate = useNavigate();
   const hasToken = checkCookieExists("api_token");
   const name = user.name;
   const role = user.role;
+
   // useEffect(() => {
   //   if (checkCookieExists("api_token")) {
   //     setHasToken(true);
@@ -20,6 +22,15 @@ const MainNav = ({ user }) => {
   // }, []);
   // const [name, setName] = useState("");
   // const [role, setRole] = useState("");
+
+  const searchManual = (e) => {
+    const manual = inputSearchManual.current.value;
+    if (e.key === "Enter") {
+      // console.log(manual);
+      inputSearchManual.current.value = "";
+      navigate(`/search/${manual}`);
+    }
+  };
 
   const navigateToLogin = () => {
     navigate("/login");
@@ -36,7 +47,7 @@ const MainNav = ({ user }) => {
         alt="cat_logo"
       />
       <nav className=" self-center flex">
-        <ul className="flex font-bold space-x-6">
+        <ul className="flex font-semibold space-x-6 ">
           <li>
             <NavLink></NavLink>
           </li>
@@ -51,7 +62,7 @@ const MainNav = ({ user }) => {
               Manuals
             </NavLink>
           </li>
-          <li className="self-center">
+          <li className="self-center mx-3">
             {(role === "user" || role === "" || !hasToken) && (
               <NavLink
                 to="/your-manuals"
@@ -75,11 +86,25 @@ const MainNav = ({ user }) => {
               </NavLink>
             )}
           </li>
+          <li className="self-center">
+            {role === "admin" && hasToken && (
+              <NavLink
+                to="/user-lists"
+                className={({ isActive }) =>
+                  isActive ? "text-cyan-300" : "text-white"
+                }
+              >
+                Users
+              </NavLink>
+            )}
+          </li>
           <li className="flex relative self-center">
             <span className="text-gray-400 w-4 absolute top-[0.6rem] left-4">
               <img src={search} alt="search" />
             </span>
             <input
+              onKeyUp={searchManual}
+              ref={inputSearchManual}
               className="w-96 align-middle h-9 font-sans pl-10 bg-zinc-800 font-normal self-center  rounded-lg outline-none caret-cyan-300  border-b-2 border-b-transparent focus:border-b-cyan-300"
               type="search"
               name="search"

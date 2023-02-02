@@ -16,6 +16,7 @@ const YourManuals = ({ manuals }) => {
               name={i.title}
               uploaded_by={i.uploaded_by}
               created_at={i.created_at}
+              status={i.status}
               // desc={i.description}
             />
           ))

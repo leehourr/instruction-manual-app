@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React from "react";
 import Card from "../ui/Card";
 
 // import Manual from "./Manual";
 
-const ManualItems = (props) => {
+const PendingManual = (props) => {
   const manuals = props.manuals;
-  // console.log(manuals);
   return (
     <>
       <div className="w-[80%] flex gap-x-4 flex-wrap  text-white mx-auto">
@@ -17,7 +16,7 @@ const ManualItems = (props) => {
             name={i.title}
             uploaded_by={i.uploaded_by}
             created_at={i.created_at}
-            desc={i.description}
+            // desc={i.description}
             // status={i.status}
             isPending={props.isPending}
           />
@@ -27,4 +26,4 @@ const ManualItems = (props) => {
   );
 };
 
-export default ManualItems;
+export default PendingManual;

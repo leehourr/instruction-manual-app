@@ -18,15 +18,8 @@ export const action = async ({ request }) => {
   const title = data.get("title");
   const desc = data.get("desc");
   const imgPath = data.get("imgUrl");
-  const user_id = document.cookie
-    .split("; ")
-    ?.find((row) => row.startsWith("uid"))
-    .split("=")[1];
 
-  // console.log("in action");
-  // console.log(title, desc, imgPath);
-  const uploadedManual = await uploadManual({
-    user_id,
+  await uploadManual({
     title: title,
     description: desc,
     img_path: imgPath,

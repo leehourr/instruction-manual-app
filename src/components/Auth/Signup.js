@@ -4,7 +4,9 @@ import AuthContext from "../../Context/Auth-context";
 import ReactDOM from "react-dom";
 import reading from "../../assets/reading.gif";
 import { Backdrop } from "../ui/Backdrop";
+import { LoadingStimulate } from "../../utils/LoadingStimulate";
 
+import loading from "../../assets/loading.gif";
 import congrat from "../../assets/congrat.gif";
 
 const Signup = () => {
@@ -16,6 +18,7 @@ const Signup = () => {
   const authCtx = useContext(AuthContext);
   const [errMessage, setErrMessage] = useState("");
   const [isAccCreated, setIsAccCreated] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
 
   const [invalidEmail, setInvalidEmail] = useState("");
   const [invalidPassword, setInvalidPassword] = useState("");
@@ -23,6 +26,7 @@ const Signup = () => {
 
   const signUpHandler = async (e) => {
     e.preventDefault();
+    setIsloading(true);
     const name = inputName.current.value;
     const email = inputEmail.current.value;
     const password = inputPassword.current.value;
@@ -41,9 +45,11 @@ const Signup = () => {
     );
     if (isValid) {
       const credential = { name, email, password };
+      await LoadingStimulate(2000);
       res = await authCtx.onSignUp(credential);
       // fetcher.submit(credential, { method: "post", action: "/Signup" });
     }
+    setIsloading(false);
 
     if (res.status === 409) {
       setErrMessage(res.message.email[0]);
@@ -167,7 +173,11 @@ const Signup = () => {
           </span>
         </div>
         <button className=" w-[80%] sm:w-[23rem] mb-4 h-9 rounded-lg bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 shadow-lg hover:shadow-pink-500 active:shadow-pink-500  ">
-          Sign up
+          {isLoading ? (
+            <img className="w-8 mx-auto" src={loading} alt="loading" />
+          ) : (
+            "Create"
+          )}
         </button>
         <p>
           Already have an account ?
@@ -204,7 +214,10 @@ const Signup = () => {
                 >
                   Back to homepage
                 </button>
-                <p onClick={redirectToLogin} className="w-3/4 text-center mx-auto">
+                <p
+                  onClick={redirectToLogin}
+                  className="w-3/4 text-center mx-auto"
+                >
                   Or go to
                   <Link className="underline ml-2 text-cyan-300" to="/login">
                     log in
