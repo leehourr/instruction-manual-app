@@ -1,5 +1,5 @@
 import React from "react";
-import ManualItems from "./ManualItems";
+// import ManualItems from "./ManualItems";
 import Card from "../ui/Card";
 
 const YourManuals = ({ manuals }) => {
