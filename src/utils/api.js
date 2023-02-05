@@ -31,8 +31,9 @@ export const clearAllCookies = () => {
 };
 
 const api = axios.create({
-  baseURL: "http://term-project.ap-northeast-1.elasticbeanstalk.com/api",
+  // baseURL: "http://term-project.ap-northeast-1.elasticbeanstalk.com/api",
   // baseURL: "http://127.0.0.1:8000/api",
+  baseURL: "https://instructions-manuals.herokuapp.com/api",
 });
 
 api.interceptors.request.use(

@@ -5,9 +5,7 @@ import { searchManual } from "../utils/api";
 
 const SearchManual = () => {
   const data = useLoaderData();
-  //   console.log("in page");
-
-  //   console.log(data);
+  //  
   return (
     <>
       <div className="text-white text-center relative  w-[80%] sm:w-[70%]  mx-auto">
