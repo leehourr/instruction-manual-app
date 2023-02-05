@@ -67,7 +67,7 @@ const AddManual = ({ navBack }) => {
       {ReactDOM.createPortal(
         <>
           {isLoading && (
-            <p className="fixed text-lg top-0 font-semibold sm:text-3xl z-60 w-full h-screen pt-24 bg-white/40 text-cyan-400">
+            <p className="fixed text-lg top-0 font-semibold sm:text-3xl z-50 w-full h-screen pt-24 bg-white/40 text-cyan-400">
               <span className="absolute top-1/2 -translate-x-1/2 left-1/2 -translate-y-1/2">
                 Uploading...
               </span>
@@ -75,7 +75,7 @@ const AddManual = ({ navBack }) => {
           )}
           <form
             onSubmit={uploadHandler}
-            className="fixed overflow-y-scroll text-white top-0 left-1/2 -translate-x-1/2 z-50 w-[60%] h-screen bg-zinc-700 mx-auto"
+            className="fixed overflow-y-scroll text-white top-0 left-1/2 -translate-x-1/2 z-40 w-[60%] h-screen bg-zinc-700 mx-auto"
           >
             <button
               disabled={isLoading}

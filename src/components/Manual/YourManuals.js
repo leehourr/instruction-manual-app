@@ -7,7 +7,7 @@ const YourManuals = ({ manuals }) => {
   // console.log(manuals.length);
   return (
     <>
-      <div className="w-[80%] flex gap-x-4 flex-wrap  text-white mx-auto">
+      <div className="w-[80%] flex gap-x-4 flex-wrap z-30 text-white mx-auto">
         {manuals.length > 0 ? (
           manuals.map((i) => (
             <Card
