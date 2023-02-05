@@ -83,7 +83,7 @@ const Card = ({
     <div
       className={`${
         isLoading ? "bg-zinc-700" : ""
-      } " my-3 sm:my-4 overflow-hidden z-40 bg-zinc-800 w-[20rem] hover:scale-110 transition-all duration-150 font-bold sm:w-[22rem]  h-full rounded-xl flex flex-col items-center justify-center text-left mx-auto 2xl:mx-[4px] cursor-pointer bg-zinc-800"`}
+      } " my-3 sm:my-4 overflow-hidden z-30 bg-zinc-800 w-[20rem] hover:scale-110 transition-all duration-150 font-bold sm:w-[22rem]  h-full rounded-xl flex flex-col items-center justify-center text-left mx-auto 2xl:mx-[4px] cursor-pointer bg-zinc-800"`}
     >
       {update && (
         <p
