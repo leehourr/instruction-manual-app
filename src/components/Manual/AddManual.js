@@ -75,7 +75,7 @@ const AddManual = ({ navBack }) => {
           )}
           <form
             onSubmit={uploadHandler}
-            className="fixed overflow-y-scroll text-white top-0 left-1/2 -translate-x-1/2 z-40 w-[60%] h-screen bg-zinc-700 mx-auto"
+            className="fixed overflow-y-scroll text-white top-0 left-1/2 -translate-x-1/2 z-50 w-[60%] h-screen bg-zinc-700 mx-auto"
           >
             <button
               disabled={isLoading}
