@@ -1,4 +1,4 @@
-import React, { Suspense, useContext } from "react";
+import React, { Suspense } from "react";
 import ManualItems from "../components/Manual/ManualItems";
 import { defer, useLoaderData, Await } from "react-router-dom";
 import { getManuals } from "../utils/api.js";
