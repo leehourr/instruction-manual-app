@@ -12,10 +12,12 @@ import loading from "../assets/loading.gif";
 
 const UserManuals = () => {
   const loadedData = useLoaderData();
+  // const err = useRouteError();
+  // console.log(loadedData);
   const [hasData, setHasData] = useState(true);
   const [isLoading, setIsloading] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
-  const [message, setMessage] = useState("");
+  // const [isAuth, setIsAuth] = useState(false);
+  // const [message, setMessage] = useState("");
   const navigate = useNavigate();
   // console.log("isDisabled");
   // console.log(hasDatas);
@@ -23,17 +25,16 @@ const UserManuals = () => {
   useEffect(() => {
     setIsloading(true);
     loadedData.Manuals.then((res) => {
-      if (res.status === 401) {
-        setIsloading(false);
-        setMessage(res.message);
+      if (res.status === 403) {
+        navigate("/404", "/");
       }
       if (res.status === 200) {
         setIsloading(false);
-        setIsAuth(true);
+        // setIsAuth(true);
         setHasData(false);
       }
     });
-  }, [loadedData.Manuals]);
+  }, [loadedData, navigate]);
 
   const openForm = () => {
     navigate("/your-manuals/upload", "/your-manuals");
@@ -57,35 +58,33 @@ const UserManuals = () => {
         <div className="mx-auto w-24 h-1 mt-4 mb-8 sm:mt-6 sm:mb-10 bg-zinc-300 rounded-full"></div>
       </div>
       <Outlet />
-      <p className="text-white text-center text-xl sm:text-2xl">{message}</p>
+      <p className="text-white text-center text-xl sm:text-2xl">{}</p>
       {isLoading && (
         <img className="w-24 mx-auto" src={loading} alt="loading..." />
       )}
-      {isAuth && (
-        <Suspense
-        // fallback={
-        //   // <img
-        //   //   className="mx-auto w-[70%] sm:w-[20%]"
-        //   //   src={cat_what}
-        //   //   alt="Loading..."
-        //   // />
-        //   // <h1 className="mt-24 font-mono text-center text-cyan-300 text-2xl sm:text-4xl font-bold uppercase">
-        //   //   Loading...
-        //   // </h1>
-        // }
+      <Suspense
+      // fallback={
+      //   // <img
+      //   //   className="mx-auto w-[70%] sm:w-[20%]"
+      //   //   src={cat_what}
+      //   //   alt="Loading..."
+      //   // />
+      //   // <h1 className="mt-24 font-mono text-center text-cyan-300 text-2xl sm:text-4xl font-bold uppercase">
+      //   //   Loading...
+      //   // </h1>
+      // }
+      >
+        <Await
+          resolve={loadedData.Manuals}
+          // errorElement={() => {
+          //   <p className="text-white font-bold text-s sm:text-lg text-center ">
+          //     Error loading manuals.
+          //   </p>;
+          // }}
         >
-          <Await
-            resolve={loadedData.Manuals}
-            // errorElement={() => {
-            //   <p className="text-white font-bold text-s sm:text-lg text-center ">
-            //     Error loading manuals.
-            //   </p>;
-            // }}
-          >
-            {(loadedData) => <YourManuals manuals={loadedData.manuals} />}
-          </Await>
-        </Suspense>
-      )}
+          {(loadedData) => <YourManuals manuals={loadedData.manuals} />}
+        </Await>
+      </Suspense>
     </>
   );
 };

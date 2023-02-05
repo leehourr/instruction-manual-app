@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/Auth-context";
 // import { Link } from "react-router-dom";
@@ -6,7 +6,6 @@ import reading from "../../assets/reading.gif";
 import { checkCookieExists } from "../../utils/api";
 
 import loading from "../../assets/loading.gif";
-import { logDOM } from "@testing-library/react";
 import { LoadingStimulate } from "../../utils/LoadingStimulate";
 
 const Login = () => {

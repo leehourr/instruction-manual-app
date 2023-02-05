@@ -1,17 +1,13 @@
-import { async } from "@firebase/util";
 import React, { Suspense, useEffect, useState } from "react";
 import {
   Await,
   defer,
-  Navigate,
-  redirect,
   useLoaderData,
   useNavigate,
   useParams,
 } from "react-router-dom";
 import Logout from "../components/Auth/Logout";
 import { getUser } from "../utils/api";
-import { Unauthzeried } from "./Unauthzeried";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -27,7 +23,7 @@ const Profile = () => {
       }
       setIsNameMatch(true);
     });
-  }, []);
+  }, [name, uData.userData, navigate]);
 
   return (
     <>

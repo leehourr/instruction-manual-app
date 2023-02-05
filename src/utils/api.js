@@ -31,7 +31,7 @@ export const clearAllCookies = () => {
 };
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
+  baseURL: "http://term-project.ap-northeast-1.elasticbeanstalk.com/api",
 });
 
 api.interceptors.request.use(
@@ -129,7 +129,7 @@ export const uploadManual = async (manual) => {
 
 //============= GET ALL MANUALS REQUEST ====================
 export const getManuals = async () => {
-  await LoadingStimulate(1500);
+  await LoadingStimulate(1000);
   const response = await api.get("/manuals").catch((e) => {
     errorHandler(e);
   });
@@ -139,7 +139,7 @@ export const getManuals = async () => {
 //============= SEARCH MANUAL ====================
 export const searchManual = async (name) => {
   await LoadingStimulate(1500);
-  const response = await api.get(`/manuals/${name}`).catch((e) => {
+  const response = await api.post(`/manuals/${name}`).catch((e) => {
     errorHandler(e);
   });
   return response.data;
@@ -155,7 +155,7 @@ export const searchAllManual = async (name) => {
 
 //============= GET YOUR MANUALS REQUEST ====================
 export const getYourManuals = async () => {
-  await LoadingStimulate(1500);
+  await LoadingStimulate(1000);
   // console.log(config);
   const response = await api.post("/your-manuals").catch((e) => {
     errorHandler(e);

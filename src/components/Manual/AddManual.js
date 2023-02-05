@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { useFetcher } from "react-router-dom";
 import { Backdrop } from "../ui/Backdrop";

@@ -1,12 +1,5 @@
-import React, { useContext, useMemo } from "react";
-import {
-  Navigate,
-  redirect,
-  defer,
-  useActionData,
-  useLoaderData,
-  useFetcher,
-} from "react-router-dom";
+import React, { useMemo } from "react";
+import { Navigate } from "react-router-dom";
 import Login from "../components/Auth/Login";
 import { signIn, checkCookieExists } from "../utils/api";
 

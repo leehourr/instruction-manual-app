@@ -26,7 +26,7 @@ const Users = () => {
         setIsAuth(true);
       }
     });
-  }, []);
+  }, [data.userList]);
 
   return (
     <div className="text-white text-center relative  w-[80%] sm:w-[70%]  mx-auto">

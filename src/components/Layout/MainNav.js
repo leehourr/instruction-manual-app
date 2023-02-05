@@ -1,10 +1,10 @@
-import React, { useEffect, useContext, useMemo, useState, useRef } from "react";
+import React, { useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { checkCookieExists, getUser } from "../../utils/api";
+import { checkCookieExists } from "../../utils/api";
 import reading from "../../assets/reading.gif";
 import search from "../../assets/search_icon.svg";
 import userIcon from "../../assets/user.svg";
-import AuthContext from "../../Context/Auth-context";
+// import AuthContext from "../../Context/Auth-context";
 
 const MainNav = ({ user }) => {
   const inputSearchManual = useRef();

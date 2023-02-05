@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import Login from "../components/Auth/Login";
+import { useEffect } from "react";
+// import Login from "../components/Auth/Login";
 import { useRouteError, useNavigate } from "react-router-dom";
-import { signIn } from "../utils/api";
-import AuthLogin from "./AuthLogin";
+// import { signIn } from "../utils/api";
+// import AuthLogin from "./AuthLogin";
 
 const AuthError = () => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const AuthError = () => {
     if (error.status === 401 && errMessage === "signup error") {
       navigate("/signup", { replace: true });
     }
-  }, []);
+  }, [error.status, errMessage, navigate]);
 };
 
 export default AuthError;

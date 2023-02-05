@@ -11,13 +11,13 @@ const Manual = ({ img, name, desc }) => {
       const doc = new jsPDF("p", "mm", "a4");
       let logo;
       logo = await getDataUri(img);
-      var lMargin = 23; //left margin in mm
-      var rMargin = 15; //right margin in mm
-      var pdfInMM = 210; // width of A4 in mm
+      let lMargin = 23; //left margin in mm
+      let rMargin = 15; //right margin in mm
+      let pdfInMM = 210; // width of A4 in mm
 
       doc.addImage(logo, "PNG", 50, 5, 120, 100);
       doc.text(`${name}`, 50, 120);
-      var lines = doc.splitTextToSize(`${desc}`, pdfInMM - lMargin - rMargin);
+      let lines = doc.splitTextToSize(`${desc}`, pdfInMM - lMargin - rMargin);
       doc.text(lines, lMargin, 130);
       // doc.text(`${desc}`, 10, 130);
       // doc.save(`${name}.pdf`);

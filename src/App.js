@@ -13,7 +13,7 @@ import Login from "./components/Auth/Login";
 import AuthProvider from "./Context/AuthProvider";
 import Users, { loader as getUserList } from "./pages/Users";
 import PageNotFound from "./pages/PageNotFound";
-import { Unauthzeried } from "./pages/Unauthzeried";
+import Unauthzeried from "./pages/Unauthzeried";
 import SearchManual, { loader as seacrhManual } from "./pages/SearchManual";
 import EachManual, { loader as manual } from "./pages/EachManual";
 

@@ -23,7 +23,7 @@ const UserLists = ({ id, email, name, status }) => {
       await LoadingStimulate(1500);
       setUtatus("active");
       setIsloading(false);
-      navigate("/user-lists")
+      navigate("/user-lists");
       return;
     }
     const res = await banUser({ user_id: id });
@@ -31,7 +31,7 @@ const UserLists = ({ id, email, name, status }) => {
     await LoadingStimulate(1500);
     setUtatus("banned");
     setIsloading(false);
-    navigate("/user-lists")
+    navigate("/user-lists");
   };
   return (
     <ul className="w-full font-sanserif font-medium flex items-start justify-between my-4 pb-6  text-white space-x-56  mx-auto [&:not(:last-child)]:border-b border-b-cyan-400">

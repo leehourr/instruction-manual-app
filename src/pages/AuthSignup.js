@@ -1,16 +1,10 @@
 import React from "react";
-import {
-  useActionData,
-  Navigate,
-  redirect,
-  defer,
-  useLoaderData,
-} from "react-router-dom";
+import { redirect } from "react-router-dom";
 import Signup from "../components/Auth/Signup";
 import { signUp } from "../utils/api";
 
 const AuthSignup = () => {
-  const result = useActionData();
+  // const result = useActionData();
   // console.log("result in action");
   // console.log(result);
   return <Signup />;

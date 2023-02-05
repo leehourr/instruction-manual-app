@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React from "react";
 import Card from "../ui/Card";
 
 // import Manual from "./Manual";

@@ -27,7 +27,7 @@ const PendingManuals = () => {
         setIsAuth(true);
       }
     });
-  }, []);
+  }, [loadedData.Manuals]);
 
   return (
     <>
