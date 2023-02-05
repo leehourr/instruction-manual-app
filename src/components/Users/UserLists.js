@@ -47,7 +47,7 @@ const UserLists = ({ id, email, name, status }) => {
       <li
         className={`${
           uStatus === "active" ? "text-cyan-500" : "text-red-400"
-        } " text-zinc-800 uppercase font-semibold sm:items-center self-end uppercase"`}
+        } " uppercase font-semibold sm:items-center self-end uppercase"`}
       >
         {uStatus}
       </li>

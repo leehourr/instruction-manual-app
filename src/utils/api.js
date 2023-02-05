@@ -131,7 +131,7 @@ export const uploadManual = async (manual) => {
 
 //============= GET ALL MANUALS REQUEST ====================
 export const getManuals = async () => {
-  await LoadingStimulate(1000);
+  // await LoadingStimulate(1000);
   const response = await api.get("/manuals").catch((e) => {
     errorHandler(e);
   });
@@ -140,7 +140,7 @@ export const getManuals = async () => {
 
 //============= SEARCH MANUAL ====================
 export const searchManual = async (name) => {
-  await LoadingStimulate(1500);
+  // await LoadingStimulate(1500);
   const response = await api.post(`/manuals/${name}`).catch((e) => {
     errorHandler(e);
   });
@@ -148,7 +148,7 @@ export const searchManual = async (name) => {
 };
 
 export const searchAllManual = async (name) => {
-  await LoadingStimulate(1500);
+  // await LoadingStimulate(1500);
   const response = await api.post(`/all-manuals/${name}`).catch((e) => {
     errorHandler(e);
   });
@@ -157,7 +157,7 @@ export const searchAllManual = async (name) => {
 
 //============= GET YOUR MANUALS REQUEST ====================
 export const getYourManuals = async () => {
-  await LoadingStimulate(1000);
+  // await LoadingStimulate(1000);
   // console.log(config);
   const response = await api.post("/your-manuals").catch((e) => {
     errorHandler(e);
@@ -167,7 +167,7 @@ export const getYourManuals = async () => {
 
 //============= GET COMPLAINTS FROM USERS ====================
 export const getComplaints = async () => {
-  await LoadingStimulate(1500);
+  // await LoadingStimulate(1500);
   const response = await api.get("/complaints").catch((e) => {
     errorHandler(e);
   });
@@ -176,7 +176,7 @@ export const getComplaints = async () => {
 
 //============= GET PENDING MANUALS ====================
 export const getPendingManuals = async (update) => {
-  await LoadingStimulate(1500);
+  // await LoadingStimulate(1500);
   const hasToken = await checkCookieExists("api_token");
   if (hasToken) {
     const response = await api
