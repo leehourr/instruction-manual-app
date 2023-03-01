@@ -53,6 +53,8 @@ api.interceptors.request.use(
 );
 
 export const getUser = async () => {
+  await LoadingStimulate(3000);
+
   const hasToken = await checkCookieExists("api_token");
   if (hasToken) {
     const response = await api.get("/user").catch((e) => {
@@ -131,7 +133,6 @@ export const uploadManual = async (manual) => {
 
 //============= GET ALL MANUALS REQUEST ====================
 export const getManuals = async () => {
-  // await LoadingStimulate(1000);
   const response = await api.get("/manuals").catch((e) => {
     errorHandler(e);
   });
